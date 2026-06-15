@@ -81,7 +81,12 @@ global.IntersectionObserver = window.IntersectionObserver;
 try {
   const vm = require('vm');
   vm.runInContext(appJsContent, window);
-  console.log('[JSDOM] script execution initiated.');
+  console.log('[JSDOM] script execution initiated. Dispatching DOMContentLoaded event...');
+  
+  // Dispatch DOMContentLoaded event manually
+  const event = window.document.createEvent('Event');
+  event.initEvent('DOMContentLoaded', true, true);
+  window.document.dispatchEvent(event);
 } catch (err) {
   console.error('[JDOM VM Error] Failed to run app.js:', err);
   errors.push(err);
