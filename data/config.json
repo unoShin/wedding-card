@@ -28,9 +28,7 @@
       { "relation": "어머니", "bank": "국민", "number": "222222222", "owner": "이정희" }
     ],
     "bride": [
-      { "relation": "신부", "bank": "신한", "number": "333333333", "owner": "이다연" },
-      { "relation": "아버지", "bank": "하나", "number": "4444444444", "owner": "이준호" },
-      { "relation": "어머니", "bank": "국민", "number": "555555555", "owner": "조은희" }
+      { "relation": "신부", "bank": "신한", "number": "333333333", "owner": "이다연" }
     ]
   },
   "transport": [
