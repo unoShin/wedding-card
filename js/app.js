@@ -544,8 +544,8 @@ document.addEventListener('DOMContentLoaded', () => {
         "mother": { "name": "이정희", "phoneNumber": "010-3333-4444" }
       },
       "bride": {
-        "lastName": "송", "firstName": "다연", "phoneNumber": "010-9876-5432",
-        "father": { "name": "송준호", "phoneNumber": "010-5555-6666" },
+        "lastName": "이", "firstName": "다연", "phoneNumber": "010-9876-5432",
+        "father": { "name": "이준호", "phoneNumber": "010-5555-6666" },
         "mother": { "name": "조은희", "deceased": true, "phoneNumber": "010-7777-8888" }
       },
       "wedding": {
@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
           { "relation": "신랑", "bank": "신한", "number": "110-412-489830", "owner": "신윤호" }
         ],
         "bride": [
-          { "relation": "신부", "bank": "신한", "number": "110-269-163200", "owner": "송다연" }
+          { "relation": "신부", "bank": "신한", "number": "110-269-163200", "owner": "이다연" }
         ]
       },
       "transport": [

@@ -7,10 +7,10 @@
     "mother": { "name": "이정희", "phoneNumber": "010-3333-4444" }
   },
   "bride": {
-    "lastName": "송",
+    "lastName": "이",
     "firstName": "다연",
     "phoneNumber": "010-9876-5432",
-    "father": { "name": "송준호", "phoneNumber": "010-5555-6666" },
+    "father": { "name": "이준호", "phoneNumber": "010-5555-6666" },
     "mother": { "name": "조은희", "deceased": true, "phoneNumber": "010-7777-8888" }
   },
   "wedding": {
@@ -26,8 +26,8 @@
       { "relation": "아버지", "bank": "카카오", "number": "3333-13-5360559", "owner": "신재근" }
     ],
     "bride": [
-      { "relation": "신부", "bank": "신한", "number": "110-269-163200", "owner": "송다연" },
-      { "relation": "아버지", "bank": "하나", "number": "143-910013-62207", "owner": "송준호" }
+      { "relation": "신부", "bank": "신한", "number": "110-269-163200", "owner": "이다연" },
+      { "relation": "아버지", "bank": "하나", "number": "143-910013-62207", "owner": "이준호" }
     ]
   },
   "transport": [
