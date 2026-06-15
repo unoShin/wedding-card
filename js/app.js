@@ -547,6 +547,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Event Listeners Setup
   function setupEventListeners() {
+    // Initialize Kakao SDK if key exists
+    if (configData && configData.kakao_app_key && window.Kakao) {
+      try {
+        if (!window.Kakao.isInitialized()) {
+          window.Kakao.init(configData.kakao_app_key);
+        }
+      } catch (err) {
+        console.error('Failed to initialize Kakao SDK:', err);
+      }
+    }
+
     // Gallery More Toggle
     document.getElementById('btn-gallery-more').addEventListener('click', () => {
       galleryShowingAll = !galleryShowingAll;
@@ -647,7 +658,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('btn-share-kakao').addEventListener('click', () => {
-      showToast('카카오톡 SDK 공유기능 데모입니다.');
+      if (configData && configData.kakao_app_key && window.Kakao && window.Kakao.isInitialized()) {
+        window.Kakao.Share.sendDefault({
+          objectType: 'feed',
+          content: {
+            title: '신윤호 🤍 이다연 결혼식에 초대합니다',
+            description: '2027년 1월 24일 일요일 오후 1시 10분 / 여의도 웨딩컨벤션',
+            imageUrl: 'https://unoshin.github.io/wedding-card/images/main_visual.jpg',
+            link: {
+              mobileWebUrl: window.location.href,
+              webUrl: window.location.href,
+            },
+          },
+          buttons: [
+            {
+              title: '모바일 청첩장 보기',
+              link: {
+                mobileWebUrl: window.location.href,
+                webUrl: window.location.href,
+              },
+            },
+          ],
+        });
+      } else if (navigator.share) {
+        navigator.share({
+          title: '신윤호 🤍 이다연 결혼식에 초대합니다',
+          text: '2027년 1월 24일 일요일 오후 1시 10분 / 여의도 웨딩컨벤션',
+          url: window.location.href
+        }).catch(err => {
+          console.log('Share failed:', err);
+          copyToClipboard(window.location.href, '청첩장 링크가 복사되었습니다.');
+        });
+      } else {
+        copyToClipboard(window.location.href, '청첩장 링크가 복사되었습니다.');
+      }
     });
   }
 
