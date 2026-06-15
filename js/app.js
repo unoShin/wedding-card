@@ -182,10 +182,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetDate = new Date(configData.wedding.date).getTime();
 
     // Together count (e.g. 2025-04-06)
-    const togetherStart = new Date('2025-04-06').getTime();
-    const nowTime = new Date().getTime();
-    const diffDays = Math.floor((nowTime - togetherStart) / (1000 * 60 * 60 * 24));
-    document.getElementById('together-count').textContent = diffDays;
+    const togetherEl = document.getElementById('together-count');
+    if (togetherEl) {
+      const togetherStart = new Date('2025-04-06').getTime();
+      const nowTime = new Date().getTime();
+      const diffDays = Math.floor((nowTime - togetherStart) / (1000 * 60 * 60 * 24));
+      togetherEl.textContent = diffDays;
+    }
 
     function updateTimer() {
       const now = new Date().getTime();
