@@ -657,7 +657,7 @@ document.addEventListener('DOMContentLoaded', () => {
       copyToClipboard(window.location.href, '청첩장 링크가 복사되었습니다.');
     });
 
-    document.getElementById('btn-share-kakao').addEventListener('click', () => {
+    document.getElementById('btn-share-native').addEventListener('click', () => {
       if (configData && configData.kakao_app_key && window.Kakao && window.Kakao.isInitialized()) {
         window.Kakao.Share.sendDefault({
           objectType: 'feed',
