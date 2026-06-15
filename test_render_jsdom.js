@@ -35,13 +35,35 @@ window.IntersectionObserver = class {
 };
 
 // Mock fetch
-window.fetch = (url) => {
+window.fetch = (url, options) => {
   console.log(`[Fetch Mock] Request to: ${url}`);
   if (url.includes('config.json')) {
     return Promise.resolve({
       ok: true,
       json: () => Promise.resolve(JSON.parse(configJsonContent))
     });
+  }
+  if (url.includes('script.google.com') || url.includes('macros/s/')) {
+    const isPost = options && options.method === 'POST';
+    if (isPost) {
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ result: 'success' })
+      });
+    } else {
+      // GET request to load guestbook
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({
+          result: 'success',
+          data: [
+            { name: "민우 & 지현", date: "2026-06-14T12:00:00.000Z", message: "윤호야, 다연아! 결혼 진심으로 축하해! 평생 행복하고 예쁘게 살아라!! ♥" },
+            { name: "김부장님", date: "2026-06-12T09:00:00.000Z", message: "윤호 대리 결혼을 축하하네. 인생의 새로운 2막을 응원하네. 행복이 가득하길." },
+            { name: "혜원 (플라워샵)", date: "2026-06-10T06:00:00.000Z", message: "다연언니! 드디어 가네 ㅠㅠ 너무너무 축하해!! 당일에 세상에서 제일 예쁠 신부 기대할게!" }
+          ]
+        })
+      });
+    }
   }
   return Promise.reject(new Error(`Unknown fetch URL: ${url}`));
 };

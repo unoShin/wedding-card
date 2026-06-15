@@ -369,68 +369,150 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 9. LocalStorage Database for Guestbook and RSVP
-  function loadGuestbook() {
+  // 9. Database for Guestbook and RSVP
+  async function loadGuestbook() {
     const listEl = document.getElementById('guestbook-list');
-    const stored = localStorage.getItem('wedding_guestbook');
-    const posts = stored ? JSON.parse(stored) : getInitialGuestbook();
+    if (!listEl) return;
     
-    listEl.innerHTML = posts.map((post, idx) => `
-      <div class="guestbook-item">
-        <div class="guestbook-meta">
-          <span class="guestbook-name">${escapeHTML(post.name)}</span>
-          <span style="display:flex; gap:10px;">
-            <span>${post.date}</span>
-            <span class="delete-gb" data-index="${idx}" style="cursor:pointer; color:var(--theme-text-muted);">삭제</span>
-          </span>
+    listEl.innerHTML = '<div style="text-align:center; padding:20px; color:var(--theme-text-muted);">방명록을 불러오는 중입니다...</div>';
+    
+    let posts = [];
+    if (configData && configData.rsvp_api_url) {
+      try {
+        const response = await fetch(configData.rsvp_api_url);
+        const json = await response.json();
+        if (json.result === 'success' && json.data) {
+          posts = json.data;
+        } else {
+          console.error('[Guestbook] Failed to load from sheet:', json.message);
+          posts = getInitialGuestbook();
+        }
+      } catch (error) {
+        console.error('[Guestbook] API load error:', error);
+        posts = getInitialGuestbook();
+      }
+    } else {
+      posts = getInitialGuestbook();
+    }
+    
+    if (posts.length === 0) {
+      listEl.innerHTML = '<div style="text-align:center; padding:20px; color:var(--theme-text-muted);">아직 등록된 축하 메시지가 없습니다. 첫 메시지를 남겨보세요!</div>';
+      return;
+    }
+    
+    listEl.innerHTML = posts.map(post => {
+      let displayDate = post.date || '';
+      if (displayDate.includes('-') && displayDate.includes('T')) {
+        try {
+          const d = new Date(displayDate);
+          displayDate = `${d.getMonth() + 1}.${d.getDate()}`;
+        } catch (e) {}
+      }
+      
+      return `
+        <div class="guestbook-item">
+          <div class="guestbook-meta">
+            <span class="guestbook-name">${escapeHTML(post.name)}</span>
+            <span style="display:flex; gap:10px;">
+              <span>${escapeHTML(displayDate)}</span>
+              <span class="delete-gb" data-name="${escapeHTML(post.name)}" data-message="${escapeHTML(post.message)}" style="cursor:pointer; color:var(--theme-text-muted);">삭제</span>
+            </span>
+          </div>
+          <div class="guestbook-content">${escapeHTML(post.message)}</div>
         </div>
-        <div class="guestbook-content">${escapeHTML(post.message)}</div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
     // Setup delete actions
     document.querySelectorAll('.delete-gb').forEach(el => {
       el.addEventListener('click', (e) => {
-        const index = e.target.dataset.index;
+        const name = e.target.dataset.name;
+        const message = e.target.dataset.message;
         const password = prompt('작성 시 입력한 비밀번호를 입력해주세요:');
         if (password) {
-          deleteGuestbookEntry(index, password);
+          deleteGuestbookEntry(name, message, password);
         }
       });
     });
   }
 
-  function deleteGuestbookEntry(index, password) {
-    const stored = localStorage.getItem('wedding_guestbook');
-    if (!stored) return;
-    const posts = JSON.parse(stored);
-    
-    if (posts[index] && posts[index].password === password) {
-      posts.splice(index, 1);
-      localStorage.setItem('wedding_guestbook', JSON.stringify(posts));
-      showToast('방명록이 삭제되었습니다.');
-      loadGuestbook();
+  async function deleteGuestbookEntry(name, message, password) {
+    if (configData && configData.rsvp_api_url) {
+      try {
+        const deleteData = {
+          type: 'delete_guestbook',
+          name,
+          message,
+          password
+        };
+        
+        const response = await fetch(configData.rsvp_api_url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain'
+          },
+          body: JSON.stringify(deleteData)
+        });
+        
+        const json = await response.json();
+        if (json.result === 'success') {
+          showToast('방명록이 삭제되었습니다.');
+          loadGuestbook();
+        } else {
+          alert(json.message || '비밀번호가 올바르지 않습니다.');
+        }
+      } catch (error) {
+        console.error('[Guestbook] Delete failed:', error);
+        alert('삭제 작업 중 오류가 발생했습니다.');
+      }
     } else {
-      alert('비밀번호가 올바르지 않습니다.');
+      alert('API 주소가 설정되지 않았습니다.');
     }
   }
 
-  function addGuestbookEntry(name, password, message) {
-    const stored = localStorage.getItem('wedding_guestbook');
-    const posts = stored ? JSON.parse(stored) : getInitialGuestbook();
-    
+  async function addGuestbookEntry(name, password, message) {
     const now = new Date();
-    const dateStr = `${now.getMonth() + 1}.${now.getDate()}`;
+    const dateStr = now.toISOString();
     
-    posts.unshift({ name, password, message, date: dateStr });
-    localStorage.setItem('wedding_guestbook', JSON.stringify(posts));
-    showToast('메시지가 등록되었습니다.');
-    loadGuestbook();
+    const guestbookData = {
+      type: 'guestbook',
+      name,
+      password,
+      message,
+      date: dateStr
+    };
+    
+    if (configData && configData.rsvp_api_url) {
+      try {
+        const response = await fetch(configData.rsvp_api_url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain'
+          },
+          body: JSON.stringify(guestbookData)
+        });
+        
+        const json = await response.json();
+        if (json.result === 'success') {
+          showToast('메시지가 등록되었습니다.');
+          loadGuestbook();
+        } else {
+          alert('등록 실패: ' + (json.message || '알 수 없는 오류'));
+        }
+      } catch (error) {
+        console.error('[Guestbook] Write failed:', error);
+        alert('메시지 등록에 실패했습니다.');
+      }
+    } else {
+      showToast('메시지가 등록되었습니다 (오프라인 모드).');
+    }
   }
 
   async function submitRSVP(side, name, attend, count, meal, message) {
     const stored = localStorage.getItem('wedding_rsvp');
     const list = stored ? JSON.parse(stored) : [];
     const rsvpData = { 
+      type: 'rsvp',
       side: side === 'groom' ? '신랑측' : '신부측', 
       name, 
       attend: attend === 'attend' ? '참석' : '불참', 
