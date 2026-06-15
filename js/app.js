@@ -258,13 +258,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. Load Mock Gallery
   function initMockGallery() {
-    // Creating 15 mock pictures
-    galleryImages = Array.from({ length: 15 }, (_, i) => {
-      // SVGs representing stylish placeholders for photographs
-      const color1 = ['#f5e6e8', '#e8e8e8', '#eae0db', '#e3ebf0', '#ebdff0'][i % 5];
-      const color2 = ['#d099a1', '#ad868b', '#dab1b6', '#a1b8d0', '#ad86ab'][i % 5];
-      return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'><rect width='100%' height='100%' fill='%23${color1.slice(1)}'/><circle cx='300' cy='300' r='120' fill='%23${color2.slice(1)}' opacity='0.3'/><text x='50%' y='50%' font-family='Noto Serif KR, sans-serif' font-size='24' fill='%23555' text-anchor='middle' dominant-baseline='middle'>Moments ${i+1}</text></svg>`;
-    });
+    // 9 gallery images inside images/gallery/ (1.jpg to 9.jpg)
+    const galleryCount = 9;
+    galleryImages = Array.from({ length: galleryCount }, (_, i) => `images/gallery/${i + 1}.jpg`);
 
     renderGallery();
   }
