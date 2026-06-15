@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function init() {
     try {
-      const response = await fetch('data/config.json');
+      const response = await fetch('data/config.json?v=' + new Date().getTime());
       configData = await response.json();
       
       renderDynamicContent();
