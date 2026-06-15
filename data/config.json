@@ -16,9 +16,9 @@
   "wedding": {
     "date": "2027-01-24T13:10:00+09:00",
     "place": "여의도 웨딩컨벤션",
-    "hall": "3층 그랜드볼룸",
+    "hall": "",
     "address": "서울특별시 영등포구 여의대로 14",
-    "addressDetail": "KT여의도빌딩 3층 그랜드볼룸"
+    "addressDetail": "KT여의도빌딩"
   },
   "accounts": {
     "groom": [

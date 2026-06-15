@@ -86,36 +86,30 @@
 .parents-grid {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  max-width: 300px;
+  gap: 15px;
+  max-width: 320px;
   margin: 0 auto;
 }
 
-.parents-row {
+.parents-row-centered {
+  text-align: center;
+  font-size: 0.98rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  font-size: 0.95rem;
 }
 
-.parents-names {
-  font-weight: 400;
-  text-align: right;
-  flex: 1;
-}
-
-.parents-relation {
-  font-size: 0.85rem;
+.parents-relation-badge {
+  font-size: 0.82rem;
   color: var(--theme-text-muted);
   margin: 0 10px;
-  min-width: 40px;
-  text-align: center;
+  display: inline-block;
 }
 
-.parents-child {
+.parents-child-name {
   font-weight: 400;
-  text-align: left;
-  flex: 1;
 }
 
 .deceased {

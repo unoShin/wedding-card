@@ -44,28 +44,24 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('main-bride-name').textContent = bride.firstName;
 
     // Date & Place
-    document.getElementById('main-date-string').innerHTML = `${formatWeddingDate(wedding.date)}<br>${wedding.hall}`;
+    document.getElementById('main-date-string').innerHTML = formatWeddingDate(wedding.date) + (wedding.hall ? '<br>' + wedding.hall : '');
     document.getElementById('main-place-string').textContent = wedding.place;
-    document.getElementById('map-hall-name').textContent = `${wedding.place} ${wedding.hall}`;
+    document.getElementById('map-hall-name').textContent = wedding.place + (wedding.hall ? ' ' + wedding.hall : '');
     document.getElementById('map-address-text').textContent = wedding.address;
 
     // Greeting Section Parents
     const parentsContainer = document.getElementById('greeting-parents-container');
     parentsContainer.innerHTML = `
       <div class="parents-grid">
-        <div class="parents-row">
-          <div class="parents-names">
-            ${groom.father.name} <span style="font-size:0.85rem;color:var(--theme-text-muted);">·</span> ${groom.mother.name}
-          </div>
-          <div class="parents-relation">의 아들</div>
-          <div class="parents-child"><b>${groom.firstName}</b></div>
+        <div class="parents-row-centered">
+          <span>${groom.father.name} · ${groom.mother.name}</span>
+          <span class="parents-relation-badge">의 아들</span>
+          <span class="parents-child-name"><b>${groom.firstName}</b></span>
         </div>
-        <div class="parents-row">
-          <div class="parents-names">
-            ${bride.father.name} <span style="font-size:0.85rem;color:var(--theme-text-muted);">·</span> ${bride.mother.name} ${bride.mother.deceased ? '<span class="deceased">故</span>' : ''}
-          </div>
-          <div class="parents-relation">의 딸</div>
-          <div class="parents-child"><b>${bride.firstName}</b></div>
+        <div class="parents-row-centered">
+          <span>${bride.father.name} · ${bride.mother.name} ${bride.mother.deceased ? '<span class="deceased">故</span>' : ''}</span>
+          <span class="parents-relation-badge">의 딸</span>
+          <span class="parents-child-name"><b>${bride.firstName}</b></span>
         </div>
       </div>
     `;
