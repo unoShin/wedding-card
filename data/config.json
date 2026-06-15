@@ -1,0 +1,45 @@
+{
+  "groom": {
+    "lastName": "신",
+    "firstName": "준호",
+    "phoneNumber": "010-1234-5678",
+    "father": { "name": "신재근", "phoneNumber": "010-1111-2222" },
+    "mother": { "name": "이정희", "phoneNumber": "010-3333-4444" }
+  },
+  "bride": {
+    "lastName": "송",
+    "firstName": "채원",
+    "phoneNumber": "010-9876-5432",
+    "father": { "name": "송준호", "phoneNumber": "010-5555-6666" },
+    "mother": { "name": "조은희", "deceased": true, "phoneNumber": "010-7777-8888" }
+  },
+  "wedding": {
+    "date": "2026-08-29T17:40:00+09:00",
+    "place": "더컨벤션 잠실",
+    "hall": "1층 그랜드볼룸",
+    "address": "서울 송파구 올림픽로 319",
+    "addressDetail": "더컨벤션 잠실 1층 그랜드볼룸"
+  },
+  "accounts": {
+    "groom": [
+      { "relation": "신랑", "bank": "신한", "number": "110-412-489830", "owner": "신준호" },
+      { "relation": "아버지", "bank": "카카오", "number": "3333-13-5360559", "owner": "신재근" }
+    ],
+    "bride": [
+      { "relation": "신부", "bank": "신한", "number": "110-269-163200", "owner": "송채원" },
+      { "relation": "아버지", "bank": "하나", "number": "143-910013-62207", "owner": "송준호" }
+    ]
+  },
+  "transport": [
+    {
+      "type": "subway",
+      "title": "지하철",
+      "body": "2호선 잠실역 8번 출구 약 300m 도보<br>8호선 잠실역 9번 출구 약 30m 도보"
+    },
+    {
+      "type": "parking",
+      "title": "주차",
+      "body": "교통회관 지상 및 지하 주차장 이용 가능 (하객 2시간 무료 주차)"
+    }
+  ]
+}
