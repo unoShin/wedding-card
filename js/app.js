@@ -427,11 +427,11 @@ document.addEventListener('DOMContentLoaded', () => {
     loadGuestbook();
   }
 
-  function submitRSVP(side, name, count, meal, message) {
+  function submitRSVP(side, name, attend, count, meal, message) {
     const stored = localStorage.getItem('wedding_rsvp');
     const list = stored ? JSON.parse(stored) : [];
     
-    list.push({ side, name, count, meal, message, date: new Date().toISOString() });
+    list.push({ side, name, attend, count, meal, message, date: new Date().toISOString() });
     localStorage.setItem('wedding_rsvp', JSON.stringify(list));
     showToast('참석 여부가 성공적으로 전달되었습니다.');
   }
@@ -472,9 +472,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // RSVP Modal Toggles
     const rsvpModal = document.getElementById('rsvp-modal');
-    document.getElementById('btn-rsvp-open').addEventListener('click', () => rsvpModal.classList.add('active'));
+    const rsvpDetails = document.getElementById('rsvp-attendance-details');
+    
+    document.getElementById('btn-rsvp-open').addEventListener('click', () => {
+      rsvpModal.classList.add('active');
+      if (rsvpDetails) rsvpDetails.style.display = 'block';
+    });
+    
     document.getElementById('btn-rsvp-close').addEventListener('click', () => rsvpModal.classList.remove('active'));
     document.getElementById('btn-rsvp-cancel').addEventListener('click', () => rsvpModal.classList.remove('active'));
+    
+    // Toggle details on attendance radio change
+    const attendRadios = document.getElementsByName('rsvp_attend');
+    attendRadios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        if (e.target.value === 'absent') {
+          if (rsvpDetails) rsvpDetails.style.display = 'none';
+        } else {
+          if (rsvpDetails) rsvpDetails.style.display = 'block';
+        }
+      });
+    });
     
     // RSVP Submit
     document.getElementById('btn-rsvp-submit').addEventListener('click', () => {
@@ -482,12 +500,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!form.reportValidity()) return;
 
       const side = form.elements['rsvp_side'].value;
+      const attend = form.elements['rsvp_attend'].value;
       const name = document.getElementById('rsvp_name').value;
-      const count = document.getElementById('rsvp_count').value;
-      const meal = form.elements['rsvp_meal'].value;
+      
+      const count = attend === 'absent' ? 0 : document.getElementById('rsvp_count').value;
+      const meal = attend === 'absent' ? 'no' : form.elements['rsvp_meal'].value;
       const message = document.getElementById('rsvp_message').value;
 
-      submitRSVP(side, name, count, meal, message);
+      submitRSVP(side, name, attend, count, meal, message);
       form.reset();
       rsvpModal.classList.remove('active');
     });
