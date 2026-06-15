@@ -68,65 +68,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Contact Section
     const contactContainer = document.getElementById('contact-container');
-    contactContainer.innerHTML = `
-      <!-- Groom Side -->
-      <div class="contact-card groom-side">
-        <h4>신랑측 연락처</h4>
-        <div class="contact-buttons">
-          <div class="contact-row">
-            <span>신랑 <b>${groom.firstName}</b></span>
-            <div class="contact-actions">
-              <a href="tel:${groom.phoneNumber}" class="contact-btn">📞</a>
-              <a href="sms:${groom.phoneNumber}" class="contact-btn">✉️</a>
+    if (contactContainer) {
+      contactContainer.innerHTML = `
+        <!-- Groom Side -->
+        <div class="contact-card groom-side">
+          <h4>신랑측 연락처</h4>
+          <div class="contact-buttons">
+            <div class="contact-row">
+              <span>신랑 <b>${groom.firstName}</b></span>
+              <div class="contact-actions">
+                <a href="tel:${groom.phoneNumber}" class="contact-btn">📞</a>
+                <a href="sms:${groom.phoneNumber}" class="contact-btn">✉️</a>
+              </div>
             </div>
-          </div>
-          <div class="contact-row">
-            <span>${groom.father.name === '아버님' ? '아버지' : `아버지 <b>${groom.father.name}</b>`}</span>
-            <div class="contact-actions">
-              <a href="tel:${groom.father.phoneNumber}" class="contact-btn">📞</a>
-              <a href="sms:${groom.father.phoneNumber}" class="contact-btn">✉️</a>
+            <div class="contact-row">
+              <span>${groom.father.name === '아버님' ? '아버지' : `아버지 <b>${groom.father.name}</b>`}</span>
+              <div class="contact-actions">
+                <a href="tel:${groom.father.phoneNumber}" class="contact-btn">📞</a>
+                <a href="sms:${groom.father.phoneNumber}" class="contact-btn">✉️</a>
+              </div>
             </div>
-          </div>
-          <div class="contact-row">
-            <span>${groom.mother.name === '어머님' ? '어머니' : `어머니 <b>${groom.mother.name}</b>`}</span>
-            <div class="contact-actions">
-              <a href="tel:${groom.mother.phoneNumber}" class="contact-btn">📞</a>
-              <a href="sms:${groom.mother.phoneNumber}" class="contact-btn">✉️</a>
+            <div class="contact-row">
+              <span>${groom.mother.name === '어머님' ? '어머니' : `어머니 <b>${groom.mother.name}</b>`}</span>
+              <div class="contact-actions">
+                <a href="tel:${groom.mother.phoneNumber}" class="contact-btn">📞</a>
+                <a href="sms:${groom.mother.phoneNumber}" class="contact-btn">✉️</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Bride Side -->
-      <div class="contact-card bride-side">
-        <h4>신부측 연락처</h4>
-        <div class="contact-buttons">
-          <div class="contact-row">
-            <span>신부 <b>${bride.firstName}</b></span>
-            <div class="contact-actions">
-              <a href="tel:${bride.phoneNumber}" class="contact-btn">📞</a>
-              <a href="sms:${bride.phoneNumber}" class="contact-btn">✉️</a>
+        <!-- Bride Side -->
+        <div class="contact-card bride-side">
+          <h4>신부측 연락처</h4>
+          <div class="contact-buttons">
+            <div class="contact-row">
+              <span>신부 <b>${bride.firstName}</b></span>
+              <div class="contact-actions">
+                <a href="tel:${bride.phoneNumber}" class="contact-btn">📞</a>
+                <a href="sms:${bride.phoneNumber}" class="contact-btn">✉️</a>
+              </div>
             </div>
-          </div>
-          <div class="contact-row">
-            <span>${bride.father.name === '아버님' ? '아버지' : `아버지 <b>${bride.father.name}</b>`}</span>
-            <div class="contact-actions">
-              <a href="tel:${bride.father.phoneNumber}" class="contact-btn">📞</a>
-              <a href="sms:${bride.father.phoneNumber}" class="contact-btn">✉️</a>
+            <div class="contact-row">
+              <span>${bride.father.name === '아버님' ? '아버지' : `아버지 <b>${bride.father.name}</b>`}</span>
+              <div class="contact-actions">
+                <a href="tel:${bride.father.phoneNumber}" class="contact-btn">📞</a>
+                <a href="sms:${bride.father.phoneNumber}" class="contact-btn">✉️</a>
+              </div>
             </div>
-          </div>
-          <div class="contact-row">
-            <span>${bride.mother.name === '어머님' ? '어머니' : `어머니 <b>${bride.mother.name}</b>`} ${bride.mother.deceased ? '<span class="deceased">故</span>' : ''}</span>
-            <div class="contact-actions">
-              ${bride.mother.deceased ? '<span style="font-size:0.75rem; color:var(--theme-text-muted);">부재중</span>' : `
-                <a href="tel:${bride.mother.phoneNumber}" class="contact-btn">📞</a>
-                <a href="sms:${bride.mother.phoneNumber}" class="contact-btn">✉️</a>
-              `}
+            <div class="contact-row">
+              <span>${bride.mother.name === '어머님' ? '어머니' : `어머니 <b>${bride.mother.name}</b>`} ${bride.mother.deceased ? '<span class="deceased">故</span>' : ''}</span>
+              <div class="contact-actions">
+                ${bride.mother.deceased ? '<span style="font-size:0.75rem; color:var(--theme-text-muted);">부재중</span>' : `
+                  <a href="tel:${bride.mother.phoneNumber}" class="contact-btn">📞</a>
+                  <a href="sms:${bride.mother.phoneNumber}" class="contact-btn">✉️</a>
+                `}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    `;
+      `;
+    }
 
     // Account Lists
     renderAccountList('groom-accounts-list', accounts.groom);
@@ -546,15 +548,18 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       "wedding": {
         "date": "2027-01-24T13:10:00+09:00",
-        "place": "여의도 웨딩컨벤션", "hall": "3층 그랜드볼룸",
+        "place": "여의도 웨딩컨벤션", "hall": "",
         "address": "서울특별시 영등포구 여의대로 14"
       },
       "accounts": {
         "groom": [
-          { "relation": "신랑", "bank": "신한", "number": "110-412-489830", "owner": "신윤호" }
+          { "relation": "신랑", "bank": "신한", "number": "111111111", "owner": "신윤호" },
+          { "relation": "어머니", "bank": "국민", "number": "222222222", "owner": "이정희" }
         ],
         "bride": [
-          { "relation": "신부", "bank": "신한", "number": "110-269-163200", "owner": "이다연" }
+          { "relation": "신부", "bank": "신한", "number": "333333333", "owner": "이다연" },
+          { "relation": "아버지", "bank": "하나", "number": "4444444444", "owner": "이준호" },
+          { "relation": "어머니", "bank": "국민", "number": "555555555", "owner": "조은희" }
         ]
       },
       "transport": [

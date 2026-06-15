@@ -22,12 +22,13 @@
   },
   "accounts": {
     "groom": [
-      { "relation": "신랑", "bank": "신한", "number": "110-412-489830", "owner": "신윤호" },
-      { "relation": "아버지", "bank": "카카오", "number": "3333-13-5360559", "owner": "신재근" }
+      { "relation": "신랑", "bank": "신한", "number": "111111111", "owner": "신윤호" },
+      { "relation": "어머니", "bank": "국민", "number": "222222222", "owner": "이정희" }
     ],
     "bride": [
-      { "relation": "신부", "bank": "신한", "number": "110-269-163200", "owner": "이다연" },
-      { "relation": "아버지", "bank": "하나", "number": "143-910013-62207", "owner": "이준호" }
+      { "relation": "신부", "bank": "신한", "number": "333333333", "owner": "이다연" },
+      { "relation": "아버지", "bank": "하나", "number": "4444444444", "owner": "이준호" },
+      { "relation": "어머니", "bank": "국민", "number": "555555555", "owner": "조은희" }
     ]
   },
   "transport": [
