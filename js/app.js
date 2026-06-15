@@ -427,12 +427,39 @@ document.addEventListener('DOMContentLoaded', () => {
     loadGuestbook();
   }
 
-  function submitRSVP(side, name, attend, count, meal, message) {
+  async function submitRSVP(side, name, attend, count, meal, message) {
     const stored = localStorage.getItem('wedding_rsvp');
     const list = stored ? JSON.parse(stored) : [];
+    const rsvpData = { 
+      side: side === 'groom' ? '신랑측' : '신부측', 
+      name, 
+      attend: attend === 'attend' ? '참석' : '불참', 
+      count: attend === 'attend' ? count : 0, 
+      meal: attend === 'attend' ? (meal === 'yes' ? '식사함' : meal === 'no' ? '식사안함' : '미정') : '해당없음', 
+      message, 
+      date: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) 
+    };
     
-    list.push({ side, name, attend, count, meal, message, date: new Date().toISOString() });
+    list.push(rsvpData);
     localStorage.setItem('wedding_rsvp', JSON.stringify(list));
+    
+    if (configData && configData.rsvp_api_url) {
+      try {
+        console.log('[RSVP] Pushing to Google Sheets API...');
+        await fetch(configData.rsvp_api_url, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain'
+          },
+          body: JSON.stringify(rsvpData)
+        });
+        console.log('[RSVP] API call triggered successfully.');
+      } catch (error) {
+        console.error('[RSVP] Failed to push to API:', error);
+      }
+    }
+    
     showToast('참석 여부가 성공적으로 전달되었습니다.');
   }
 
