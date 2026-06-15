@@ -442,6 +442,18 @@
   color: var(--theme-text-body);
 }
 
+.guide-tip {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--theme-text-muted);
+  background-color: var(--theme-color-accent-subtle);
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-top: 8px;
+  border-left: 3px solid var(--theme-color-accent);
+}
+
 /* 11. Footer Section */
 .footer-text {
   font-size: 0.8rem;
