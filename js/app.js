@@ -85,14 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="contact-row">
-            <span>아버지 <b>${groom.father.name}</b></span>
+            <span>${groom.father.name === '아버님' ? '아버지' : `아버지 <b>${groom.father.name}</b>`}</span>
             <div class="contact-actions">
               <a href="tel:${groom.father.phoneNumber}" class="contact-btn">📞</a>
               <a href="sms:${groom.father.phoneNumber}" class="contact-btn">✉️</a>
             </div>
           </div>
           <div class="contact-row">
-            <span>어머니 <b>${groom.mother.name}</b></span>
+            <span>${groom.mother.name === '어머님' ? '어머니' : `어머니 <b>${groom.mother.name}</b>`}</span>
             <div class="contact-actions">
               <a href="tel:${groom.mother.phoneNumber}" class="contact-btn">📞</a>
               <a href="sms:${groom.mother.phoneNumber}" class="contact-btn">✉️</a>
@@ -113,14 +113,14 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="contact-row">
-            <span>아버지 <b>${bride.father.name}</b></span>
+            <span>${bride.father.name === '아버님' ? '아버지' : `아버지 <b>${bride.father.name}</b>`}</span>
             <div class="contact-actions">
               <a href="tel:${bride.father.phoneNumber}" class="contact-btn">📞</a>
               <a href="sms:${bride.father.phoneNumber}" class="contact-btn">✉️</a>
             </div>
           </div>
           <div class="contact-row">
-            <span>어머니 <b>${bride.mother.name}</b> ${bride.mother.deceased ? '<span class="deceased">故</span>' : ''}</span>
+            <span>${bride.mother.name === '어머님' ? '어머니' : `어머니 <b>${bride.mother.name}</b>`} ${bride.mother.deceased ? '<span class="deceased">故</span>' : ''}</span>
             <div class="contact-actions">
               ${bride.mother.deceased ? '<span style="font-size:0.75rem; color:var(--theme-text-muted);">부재중</span>' : `
                 <a href="tel:${bride.mother.phoneNumber}" class="contact-btn">📞</a>
@@ -545,8 +545,8 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       "bride": {
         "lastName": "이", "firstName": "다연", "phoneNumber": "010-9876-5432",
-        "father": { "name": "이준호", "phoneNumber": "010-5555-6666" },
-        "mother": { "name": "조은희", "deceased": true, "phoneNumber": "010-7777-8888" }
+        "father": { "name": "아버님", "phoneNumber": "010-5555-6666" },
+        "mother": { "name": "어머님", "deceased": false, "phoneNumber": "010-7777-8888" }
       },
       "wedding": {
         "date": "2027-01-24T13:10:00+09:00",
