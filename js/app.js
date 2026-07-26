@@ -259,9 +259,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. Load Mock Gallery
   function initMockGallery() {
-    // 9 gallery images inside images/gallery/ (1.jpg to 9.jpg)
-    const galleryCount = 9;
-    galleryImages = Array.from({ length: galleryCount }, (_, i) => `images/gallery/${i + 1}.jpg`);
+    // 15 gallery images inside images/final/ (01.jpg to 15.jpg)
+    const galleryCount = 15;
+    galleryImages = Array.from({ length: galleryCount }, (_, i) => {
+      const num = String(i + 1).padStart(2, '0');
+      return `images/final/${num}.jpg`;
+    });
 
     renderGallery();
   }
@@ -664,7 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
           content: {
             title: '신윤호 🤍 이다연 결혼식에 초대합니다',
             description: '2027년 1월 24일 일요일 오후 1시 10분 / 여의도 웨딩컨벤션',
-            imageUrl: 'https://unoshin.github.io/wedding-card/images/main_visual.jpg',
+            imageUrl: 'https://unoshin.github.io/wedding-card/images/final/new_main.jpg',
             link: {
               mobileWebUrl: window.location.href,
               webUrl: window.location.href,
