@@ -50,16 +50,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('map-address-text').textContent = wedding.address;
 
     // Greeting Section Parents
+    const groomParents = [];
+    if (groom.father && groom.father.name) groomParents.push(groom.father.name);
+    if (groom.mother && groom.mother.name) groomParents.push(groom.mother.name);
+    const groomParentsText = groomParents.join(' · ');
+
+    const brideParents = [];
+    if (bride.father && bride.father.name) brideParents.push(bride.father.name);
+    if (bride.mother && bride.mother.name) {
+      brideParents.push(bride.mother.name + (bride.mother.deceased ? ' <span class="deceased">故</span>' : ''));
+    }
+    const brideParentsText = brideParents.join(' · ');
+
     const parentsContainer = document.getElementById('greeting-parents-container');
     parentsContainer.innerHTML = `
       <div class="parents-grid">
         <div class="parents-row-centered">
-          <span>${groom.father.name} · ${groom.mother.name}</span>
+          <span>${groomParentsText}</span>
           <span class="parents-relation-badge">의 아들</span>
           <span class="parents-child-name"><b>${groom.firstName}</b></span>
         </div>
         <div class="parents-row-centered">
-          <span>${bride.father.name} · ${bride.mother.name} ${bride.mother.deceased ? '<span class="deceased">故</span>' : ''}</span>
+          <span>${brideParentsText}</span>
           <span class="parents-relation-badge">의 딸</span>
           <span class="parents-child-name"><b>${bride.firstName}</b></span>
         </div>
@@ -81,20 +93,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a href="sms:${groom.phoneNumber}" class="contact-btn">✉️</a>
               </div>
             </div>
+            ${groom.father && groom.father.name ? `
             <div class="contact-row">
-              <span>${groom.father.name === '아버님' ? '아버지' : `아버지 <b>${groom.father.name}</b>`}</span>
+              <span>아버지 <b>${groom.father.name}</b></span>
               <div class="contact-actions">
                 <a href="tel:${groom.father.phoneNumber}" class="contact-btn">📞</a>
                 <a href="sms:${groom.father.phoneNumber}" class="contact-btn">✉️</a>
               </div>
             </div>
+            ` : ''}
+            ${groom.mother && groom.mother.name ? `
             <div class="contact-row">
-              <span>${groom.mother.name === '어머님' ? '어머니' : `어머니 <b>${groom.mother.name}</b>`}</span>
+              <span>어머니 <b>${groom.mother.name}</b></span>
               <div class="contact-actions">
                 <a href="tel:${groom.mother.phoneNumber}" class="contact-btn">📞</a>
                 <a href="sms:${groom.mother.phoneNumber}" class="contact-btn">✉️</a>
               </div>
             </div>
+            ` : ''}
           </div>
         </div>
 
@@ -109,15 +125,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a href="sms:${bride.phoneNumber}" class="contact-btn">✉️</a>
               </div>
             </div>
+            ${bride.father && bride.father.name ? `
             <div class="contact-row">
-              <span>${bride.father.name === '아버님' ? '아버지' : `아버지 <b>${bride.father.name}</b>`}</span>
+              <span>아버지 <b>${bride.father.name}</b></span>
               <div class="contact-actions">
                 <a href="tel:${bride.father.phoneNumber}" class="contact-btn">📞</a>
                 <a href="sms:${bride.father.phoneNumber}" class="contact-btn">✉️</a>
               </div>
             </div>
+            ` : ''}
+            ${bride.mother && bride.mother.name ? `
             <div class="contact-row">
-              <span>${bride.mother.name === '어머님' ? '어머니' : `어머니 <b>${bride.mother.name}</b>`} ${bride.mother.deceased ? '<span class="deceased">故</span>' : ''}</span>
+              <span>어머니 <b>${bride.mother.name}</b></span>
               <div class="contact-actions">
                 ${bride.mother.deceased ? '<span style="font-size:0.75rem; color:var(--theme-text-muted);">부재중</span>' : `
                   <a href="tel:${bride.mother.phoneNumber}" class="contact-btn">📞</a>
@@ -125,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `}
               </div>
             </div>
+            ` : ''}
           </div>
         </div>
       `;

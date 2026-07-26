@@ -5,15 +5,15 @@
     "lastName": "신",
     "firstName": "윤호",
     "phoneNumber": "010-1234-5678",
-    "father": { "name": "신재근", "phoneNumber": "010-1111-2222" },
+    "father": { "name": "", "phoneNumber": "" },
     "mother": { "name": "이정희", "phoneNumber": "010-3333-4444" }
   },
   "bride": {
     "lastName": "이",
     "firstName": "다연",
     "phoneNumber": "010-9876-5432",
-    "father": { "name": "아버님", "phoneNumber": "010-5555-6666" },
-    "mother": { "name": "어머님", "deceased": false, "phoneNumber": "010-7777-8888" }
+    "father": { "name": "이주엽", "phoneNumber": "010-5555-6666" },
+    "mother": { "name": "정현", "deceased": false, "phoneNumber": "010-7777-8888" }
   },
   "wedding": {
     "date": "2027-01-24T13:10:00+09:00",
