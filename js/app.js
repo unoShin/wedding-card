@@ -68,12 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="parents-row-centered">
           <span>${groomParentsText}</span>
           <span class="parents-relation-badge">의 아들</span>
-          <span class="parents-child-name"><b>${groom.firstName}</b></span>
+          <span class="parents-child-name"><b>${groom.lastName}${groom.firstName}</b></span>
         </div>
         <div class="parents-row-centered">
           <span>${brideParentsText}</span>
           <span class="parents-relation-badge">의 딸</span>
-          <span class="parents-child-name"><b>${bride.firstName}</b></span>
+          <span class="parents-child-name"><b>${bride.lastName}${bride.firstName}</b></span>
         </div>
       </div>
     `;
