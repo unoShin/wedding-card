@@ -1,8 +1,8 @@
 :root {
   /* Fonts */
-  --font-heading: 'Noto Serif KR', serif;
-  --font-body: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-  --font-eng: 'Inter', sans-serif;
+  --font-heading: 'Gowun Batang', 'Noto Serif KR', serif;
+  --font-body: 'Gowun Batang', 'Noto Serif KR', serif;
+  --font-eng: 'Cormorant Garamond', 'Inter', serif;
 
   /* Theme Colors (Romantic Theme) */
   --theme-text-body: #1a1a1a;
