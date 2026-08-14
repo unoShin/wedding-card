@@ -376,7 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function copyToClipboard(text, successMsg) {
     navigator.clipboard.writeText(text).then(() => {
-      showToast(successMsg);
+      if (successMsg) {
+        showToast(successMsg);
+      }
     }).catch(err => {
       console.error('Copy failed:', err);
     });
@@ -613,6 +615,41 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target === lightboxModal) closeLightbox();
     });
 
+    // Touch Swipe Support for Lightbox
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function handleLightboxSwipe() {
+      const swipeThreshold = 50; // minimum swipe distance in pixels
+      if (touchEndX < touchStartX - swipeThreshold) {
+        nextLightbox(); // Swipe left -> Next image
+      } else if (touchEndX > touchStartX + swipeThreshold) {
+        prevLightbox(); // Swipe right -> Previous image
+      }
+    }
+
+    lightboxModal.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightboxModal.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleLightboxSwipe();
+    }, { passive: true });
+
+    // Keyboard navigation for lightbox
+    document.addEventListener('keydown', (e) => {
+      if (lightboxModal.classList.contains('active')) {
+        if (e.key === 'ArrowLeft') {
+          prevLightbox();
+        } else if (e.key === 'ArrowRight') {
+          nextLightbox();
+        } else if (e.key === 'Escape') {
+          closeLightbox();
+        }
+      }
+    });
+
     // RSVP Modal Toggles
     const rsvpModal = document.getElementById('rsvp-modal');
     const rsvpDetails = document.getElementById('rsvp-attendance-details');
@@ -677,7 +714,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Share buttons
     document.getElementById('btn-share-link').addEventListener('click', () => {
-      copyToClipboard(window.location.href, '청첩장 링크가 복사되었습니다.');
+      copyToClipboard(window.location.href, '');
     });
 
     document.getElementById('btn-share-native').addEventListener('click', () => {
@@ -710,10 +747,10 @@ document.addEventListener('DOMContentLoaded', () => {
           url: window.location.href
         }).catch(err => {
           console.log('Share failed:', err);
-          copyToClipboard(window.location.href, '청첩장 링크가 복사되었습니다.');
+          copyToClipboard(window.location.href, '');
         });
       } else {
-        copyToClipboard(window.location.href, '청첩장 링크가 복사되었습니다.');
+        copyToClipboard(window.location.href, '');
       }
     });
   }
