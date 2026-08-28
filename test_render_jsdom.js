@@ -7,6 +7,9 @@ console.log('--- Starting JSDOM rendering & verification test ---');
 // 1. Read files
 const htmlContent = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
 const appJsContent = fs.readFileSync(path.join(__dirname, 'js/app.js'), 'utf8');
+const petalsJsContent = fs.existsSync(path.join(__dirname, 'js/petals.js')) 
+  ? fs.readFileSync(path.join(__dirname, 'js/petals.js'), 'utf8') 
+  : '';
 const configJsonContent = fs.readFileSync(path.join(__dirname, 'data/config.json'), 'utf8');
 
 // 2. Setup Virtual DOM with JSDOM
@@ -99,10 +102,13 @@ global.localStorage = window.localStorage;
 global.fetch = window.fetch;
 global.IntersectionObserver = window.IntersectionObserver;
 
-// 5. Run the app.js code inside JSDOM context
+// 5. Run the app.js and petals.js code inside JSDOM context
 try {
   const vm = require('vm');
   vm.runInContext(appJsContent, window);
+  if (petalsJsContent) {
+    vm.runInContext(petalsJsContent, window);
+  }
   console.log('[JSDOM] script execution initiated. Dispatching DOMContentLoaded event...');
   
   // Dispatch DOMContentLoaded event manually
@@ -110,7 +116,7 @@ try {
   event.initEvent('DOMContentLoaded', true, true);
   window.document.dispatchEvent(event);
 } catch (err) {
-  console.error('[JDOM VM Error] Failed to run app.js:', err);
+  console.error('[JDOM VM Error] Failed to run scripts:', err);
   errors.push(err);
   hasRuntimeErrors = true;
 }
@@ -161,6 +167,12 @@ setTimeout(() => {
     const brideAccounts = document.getElementById('bride-accounts-list');
     if (!groomAccounts || !groomAccounts.innerHTML.trim() || !brideAccounts || !brideAccounts.innerHTML.trim()) {
       throw new Error('BLANK SECTION DETECTED: Accounts list is empty!');
+    }
+
+    // Verify petals animation container
+    const petalsContainer = document.querySelector('.petals');
+    if (petalsContainer) {
+      console.log(`[Verify] Petals animation container rendered with ${petalsContainer.children.length} petals.`);
     }
 
     console.log('[Test] SUCCESS: Wedding card JSDOM test passed with zero errors.');

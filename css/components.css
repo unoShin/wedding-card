@@ -183,3 +183,39 @@
   max-height: 1000px;
   transition: max-height 0.5s ease-in-out;
 }
+
+/* ───────────────────────────────────────────────────────────────
+   꽃잎 흩날림 효과 (Petals Falling Animation)
+   pointer-events: none 으로 클릭/터치 방해 없음
+──────────────────────────────────────────────────────────────── */
+.petals {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--layout-max-width, 440px);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.petal {
+  position: absolute;
+  top: 0;
+  border-radius: 100% 0 100% 0;
+  will-change: transform;
+  animation-name: petal-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes petal-fall {
+  0% {
+    transform: translateY(-12vh) translateX(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(112vh) translateX(var(--drift, 0)) rotate(var(--spin, 360deg));
+  }
+}

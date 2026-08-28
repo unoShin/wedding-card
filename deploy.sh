@@ -15,12 +15,27 @@ echo "✅ [Success] Rendering validation passed cleanly."
 echo "=== [Step 2] Deploying to GitHub ==="
 
 # Read token
-TOKEN_PATH="/mnt/d/Storage/project/gh_tk.txt"
-if [ ! -f "$TOKEN_PATH" ]; then
-  echo "❌ [Error] GitHub OAuth Token file not found at $TOKEN_PATH"
+TOKEN_PATHS=(
+  "/home/unowhat/project/gh_tk.txt"
+  "/home/unowhat/project/gh_tk"
+  "$(dirname "$PWD")/gh_tk.txt"
+  "$(dirname "$PWD")/gh_tk"
+  "/mnt/d/Storage/project/gh_tk.txt"
+)
+
+GH_TOKEN=""
+for p in "${TOKEN_PATHS[@]}"; do
+  if [ -f "$p" ]; then
+    GH_TOKEN=$(cat "$p" | tr -d '\r\n')
+    echo "🔑 Found GitHub Token at: $p"
+    break
+  fi
+done
+
+if [ -z "$GH_TOKEN" ]; then
+  echo "❌ [Error] GitHub OAuth Token file not found in candidates!"
   exit 1
 fi
-GH_TOKEN=$(cat "$TOKEN_PATH" | tr -d '\r\n')
 
 # Check git status
 git add .
