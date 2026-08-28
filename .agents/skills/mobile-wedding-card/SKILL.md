@@ -9,21 +9,50 @@ description: >-
   and GitHub Pages auto-deployment.
 ---
 
-# Mobile Wedding Card Skill
+# Mobile Wedding Card Skill (모바일 청첩장 제작 스킬)
 
-This skill guides agents in creating, customizing, testing, and deploying production-grade, highly responsive, and aesthetically refined **Mobile Wedding Invitations (모바일 청첩장)**.
+This skill guides any AI agent (Antigravity, Claude Code, Cursor, Windsurf, Roo Code, Copilot, etc.) in interactively creating, customizing, testing, and deploying production-grade, highly responsive, and aesthetically refined **Mobile Wedding Invitations (모바일 청첩장)**.
+
+---
+
+## 🤖 Agent Execution Modes
+
+When a user requests to create or customize a mobile wedding card, choose the appropriate flow:
+
+### Mode A: Interactive Agent Chat Interview (Recommended for conversational AI)
+If the user interacts in chat:
+1. **Interview the User**: Gather the essential details in an organized, friendly manner:
+   - **Groom & Bride**: Names, phone numbers, parents' names & deceased status.
+   - **Wedding Schedule**: Date & time (e.g. `2027-01-24 13:10`), Venue name, Hall name, and Address.
+   - **Bank Accounts**: Groom & bride side bank names, account numbers, and account holders.
+   - **Visual Theme**: 
+     - *1. Romantic Rose (Default)*: Soft pink & warm beige.
+     - *2. Classic Elegance*: Deep navy & champagne gold.
+     - *3. Modern Pure*: Minimalist black & white.
+   - **Effects**: Falling flower petals animation (`petals.js`) on/off.
+2. **Scaffold & Apply**: Copy templates from `templates/` to the target directory and write `data/config.json` with the gathered values.
+3. **Verify & QA**: Run `npm test` (`node test_render_jsdom.js`) to ensure zero blank-page errors.
+
+### Mode B: Interactive CLI Wizard (`scripts/init.js`)
+If running in a terminal or user prefers terminal prompts:
+```bash
+npm run init [target-directory]
+# or
+node scripts/init.js [target-directory]
+```
+The wizard prompts for couple details, dates, venues, accounts, and themes, then automatically scaffolds and configures the ready-to-run project.
 
 ---
 
 ## 🌟 Key Architecture & Philosophy
 
 1. **Zero Framework Overhead (Pure Vanilla HTML/CSS/JS)**:
-   - Ultra-fast first contentful paint (FCP), zero build step required for static hosting (GitHub Pages, Vercel, Netlify, S3).
-   - High compatibility across mobile Safari (iOS), Chrome (Android), and in-app webviews (KakaoTalk, Line, Instagram).
+   - Ultra-fast First Contentful Paint (FCP), zero build step required for static hosting (GitHub Pages, Vercel, Netlify, S3).
+   - 100% compatibility across mobile Safari (iOS), Chrome (Android), and in-app webviews (KakaoTalk, Line, Instagram).
 
 2. **Configuration-Driven Architecture (`data/config.json`)**:
    - All text, names, dates, venues, bank accounts, transportation info, and API endpoints are cleanly separated from HTML markup.
-   - Any agent or user can customize the entire invitation simply by modifying `config.json`.
+   - The entire invitation is customizable simply by modifying `config.json`.
 
 3. **Serverless RSVP & Guestbook (`Google Apps Script` + `Google Sheets`)**:
    - Free, permanent, zero-maintenance backend for receiving guest attendance and celebratory guestbook messages with password-based deletion.
@@ -65,11 +94,10 @@ wedding-card/
 
 ### Step 1: Scaffolding a New Wedding Card
 To create a new wedding card project in a target folder:
-1. Copy standard templates from the skill's `templates/` directory or run the scaffolding script:
-   ```bash
-   node <skill-path>/scripts/scaffold.js /path/to/target-project
-   ```
-2. Run `npm install` in the project directory to install `jsdom` and `sharp`.
+```bash
+node scripts/scaffold.js /path/to/target-project
+```
+Then run `npm install` in the project directory to install `jsdom` and `sharp`.
 
 ### Step 2: Customizing Information (`data/config.json`)
 Edit `data/config.json` with the couple's details:
@@ -120,7 +148,6 @@ Use `deploy.sh` for safe token-based GitHub Pages deployment:
 ```bash
 ./deploy.sh
 ```
-The script runs `npm test` first; if any assertion fails, deployment is aborted immediately.
 
 ---
 
